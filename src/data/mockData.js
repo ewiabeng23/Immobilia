@@ -103,11 +103,11 @@ export const formatPrice = (price, listingType, lang = 'fr') => {
 }
 
 export const CITY_IMAGES = {
-  'Douala':    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
-  'Yaoundé':   'https://images.unsplash.com/photo-1523413184730-e85dbbd902bf?w=600&q=80',
-  'Bafoussam': 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',
+  'Douala':    'https://cxpxlvgchyvbxhhwnnlh.supabase.co/storage/v1/object/public/property-image/properties/Douala.png',
+  'Yaoundé':   'https://cxpxlvgchyvbxhhwnnlh.supabase.co/storage/v1/object/public/property-image/properties/Yaounde.png',
+  'Bafoussam': 'https://cxpxlvgchyvbxhhwnnlh.supabase.co/storage/v1/object/public/property-image/properties/Baff.jpg',
   'Kribi':     'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80',
-  'Bamenda':   'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80',
+  'Bamenda':   'https://cxpxlvgchyvbxhhwnnlh.supabase.co/storage/v1/object/public/property-image/properties/Bamenda.png',
   'Garoua':    'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80',
   'Buea':      'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600&q=80',
 }
