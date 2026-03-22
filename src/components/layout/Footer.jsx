@@ -41,9 +41,9 @@ export default function Footer() {
         <div className={styles.col}>
           <h4>{lang === 'fr' ? 'Contact' : 'Contact'}</h4>
           <a href="mailto:contact@loco.com">{t.about.contact_email}</a>
-          <a href="tel:+2376XXXXXXXX">{t.about.contact_phone}</a>
+          <a href="tel:+447789806378">{t.about.contact_phone}</a>
           <p style={{ marginTop: 12, fontSize: 12, color: 'var(--text-muted)' }}>
-            WhatsApp: +237 6XX XXX XXX
+            WhatsApp: +44 7789806378
           </p>
         </div>
       </div>

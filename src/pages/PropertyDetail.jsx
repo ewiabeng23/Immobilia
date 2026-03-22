@@ -111,11 +111,15 @@ export default function PropertyDetail() {
                   height="220"
                   frameBorder="0"
                   style={{ borderRadius: 12, border: 'none', display: 'block' }}
-                  src={`https://maps.google.com/maps?q=${encodeURIComponent((property.neighborhood ? property.neighborhood + ', ' : '') + property.city + ', Cameroon')}&output=embed&z=14`}
+                  src={property.lat && property.lng
+                    ? `https://maps.google.com/maps?q=${property.lat},${property.lng}&output=embed&z=15`
+                    : `https://maps.google.com/maps?q=${encodeURIComponent((property.neighborhood ? property.neighborhood + ', ' : '') + property.city + ', Cameroon')}&output=embed&z=14`}
                   allowFullScreen
                 />
                 <a
-                  href={`https://www.google.com/maps/search/${encodeURIComponent((property.neighborhood ? property.neighborhood + ', ' : '') + property.city + ', Cameroon')}`}
+                  href={property.lat && property.lng
+                    ? `https://www.google.com/maps?q=${property.lat},${property.lng}`
+                    : `https://www.google.com/maps/search/${encodeURIComponent((property.neighborhood ? property.neighborhood + ', ' : '') + property.city + ', Cameroon')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.mapLink}
