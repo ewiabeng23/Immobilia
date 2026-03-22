@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Bed, Bath, Maximize, MapPin, Phone, MessageCircle, Share2, BadgeCheck, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLang } from '../hooks/useLang'
 import { mockProperties, formatPrice } from '../data/mockData'
 import { amenityLabels } from '../i18n/translations'
-import { supabase } from '../lib/supabase'
 import PropertyCard from '../components/property/PropertyCard'
 import styles from './PropertyDetail.module.css'
 
@@ -13,42 +12,8 @@ export default function PropertyDetail() {
   const { t, lang } = useLang()
   const [imgIdx, setImgIdx] = useState(0)
 
-  const [property, setProperty] = useState(null)
-  const [similar, setSimilar] = useState([])
-  const [loadingProp, setLoadingProp] = useState(true)
-
-  useEffect(() => {
-    // Try Supabase first
-    supabase.from('properties').select('*').eq('id', id).single()
-      .then(({ data, error }) => {
-        if (!error && data) {
-          // Normalize fields
-          if (!data.images || !Array.isArray(data.images)) data.images = []
-          if (!data.amenities || !Array.isArray(data.amenities)) data.amenities = []
-          if (!data.agent) data.agent = {
-            name: data.agent_name || '—',
-            phone: data.agent_phone || '—',
-            avatar: (data.agent_name || 'AG').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()
-          }
-          setProperty(data)
-          // Load similar
-          supabase.from('properties').select('*').eq('verified', true).neq('id', id).eq('city', data.city).limit(3)
-            .then(({ data: sim }) => setSimilar(sim || []))
-        } else {
-          // Fall back to mock data
-          const mock = mockProperties.find(p => p.id === id)
-          if (mock) setProperty(mock)
-          setSimilar(mockProperties.filter(p => p.id !== id && p.city === mock?.city).slice(0,3))
-        }
-        setLoadingProp(false)
-      })
-  }, [id])
-
-  if (loadingProp) return (
-    <div style={{minHeight:'80vh',display:'flex',alignItems:'center',justifyContent:'center',color:'rgba(255,255,255,0.5)',fontSize:16}}>
-      Loading…
-    </div>
-  )
+  const property = mockProperties.find(p => p.id === id)
+  const similar = mockProperties.filter(p => p.id !== id && (p.city === property?.city || p.listing_type === property?.listing_type)).slice(0, 3)
 
   if (!property) {
     return (
@@ -83,12 +48,12 @@ export default function PropertyDetail() {
             {/* Image gallery */}
             <div className={styles.gallery}>
               <img
-                src={property.images && property.images.length > 0 ? property.images[imgIdx] : "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=70"}
+                src={property.images[imgIdx]}
                 alt={property.title}
                 className={styles.mainImg}
                 onError={e => { e.target.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=70' }}
               />
-              {property.images && property.images.length > 1 && (
+              {property.images.length > 1 && (
                 <>
                   <button className={`${styles.navBtn} ${styles.navLeft}`} onClick={prevImg}><ChevronLeft size={20}/></button>
                   <button className={`${styles.navBtn} ${styles.navRight}`} onClick={nextImg}><ChevronRight size={20}/></button>
@@ -107,7 +72,7 @@ export default function PropertyDetail() {
             </div>
 
             {/* Thumbnails */}
-            {property.images && property.images.length > 1 && (
+            {property.images.length > 1 && (
               <div className={styles.thumbs}>
                 {property.images.map((img, i) => (
                   <button key={i} className={`${styles.thumb} ${i === imgIdx ? styles.thumbActive : ''}`} onClick={() => setImgIdx(i)}>

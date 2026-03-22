@@ -139,15 +139,15 @@ export const translations = {
     },
     // About
     about: {
-      title: 'About LoCo.com',
+      title: 'About LoCo.cm',
       subtitle: 'Built for Cameroon, by Cameroonians.',
-      p1: 'LoCo.com is the modern real estate platform designed specifically for the Cameroonian market. Whether you\'re looking to rent an apartment in Douala, buy land in Kribi, or sell your property in Yaoundé — we connect you with the right people.',
+      p1: 'LoCo.cm is the modern real estate platform designed specifically for the Cameroonian market. Whether you\'re looking to rent an apartment in Douala, buy land in Kribi, or sell your property in Yaoundé — we connect you with the right people.',
       p2: 'We believe finding a home should be simple, transparent, and stress-free. That\'s why we verify every listing, empower agents, and put the tools in your hands.',
       mission: 'Our Mission',
       mission_text: 'To make real estate in Cameroon accessible, transparent, and trustworthy for everyone.',
       contact_title: 'Get in Touch',
       contact_email: 'contact@loco.com',
-      contact_phone: '+44 7789806378',
+      contact_phone: '+237 6XX XXX XXX',
     },
     // General
     general: {
@@ -291,15 +291,15 @@ export const translations = {
       cta_btn: 'Publier une annonce — Gratuit',
     },
     about: {
-      title: 'À propos de LoCo.com',
+      title: 'À propos de LoCo.cm',
       subtitle: 'Conçu pour le Cameroun, par des Camerounais.',
-      p1: 'LoCo.com est la plateforme immobilière moderne conçue spécifiquement pour le marché camerounais. Que vous souhaitiez louer un appartement à Douala, acheter un terrain à Kribi ou vendre votre bien à Yaoundé — nous vous connectons aux bonnes personnes.',
+      p1: 'LoCo.cm est la plateforme immobilière moderne conçue spécifiquement pour le marché camerounais. Que vous souhaitiez louer un appartement à Douala, acheter un terrain à Kribi ou vendre votre bien à Yaoundé — nous vous connectons aux bonnes personnes.',
       p2: 'Nous croyons que trouver un logement doit être simple, transparent et sans stress. C\'est pourquoi nous vérifions chaque annonce, valorisons les agents et vous donnons tous les outils nécessaires.',
       mission: 'Notre mission',
       mission_text: 'Rendre l\'immobilier au Cameroun accessible, transparent et digne de confiance pour tous.',
       contact_title: 'Contactez-nous',
       contact_email: 'contact@loco.com',
-      contact_phone: '+44 7789806378',
+      contact_phone: '+237 6XX XXX XXX',
     },
     general: {
       loading: 'Chargement…',

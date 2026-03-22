@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Search, ArrowRight, Shield, Phone, MapPin } from 'lucide-react'
 import { useLang } from '../hooks/useLang'
 import { mockProperties, CITY_IMAGES } from '../data/mockData'
+import { supabase } from '../lib/supabase'
 import PropertyCard from '../components/property/PropertyCard'
 import styles from './Home.module.css'
 
@@ -12,7 +13,15 @@ export default function Home() {
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('rent')
 
-  const featured = mockProperties.filter(p => p.featured).slice(0, 6)
+  const [dbProperties, setDbProperties] = useState([])
+  useEffect(() => {
+    supabase.from('properties').select('id,city,featured,verified').eq('verified', true)
+      .then(({ data }) => { if (data) setDbProperties(data) })
+  }, [])
+  const allProps = dbProperties.length > 0 ? dbProperties : mockProperties
+  const featured = dbProperties.length > 0
+    ? dbProperties.filter(p => p.featured).slice(0, 6)
+    : mockProperties.filter(p => p.featured).slice(0, 6)
   const cities = ['Douala', 'Yaoundé', 'Bafoussam', 'Kribi', 'Bamenda', 'Garoua']
 
   const handleSearch = (e) => {
@@ -175,7 +184,7 @@ export default function Home() {
           </div>
           <div className={styles.citiesGrid}>
             {cities.map((city, i) => {
-              const count = mockProperties.filter(p => p.city === city).length
+              const count = allProps.filter(p => p.city === city).length
               return (
                 <Link
                   key={city}

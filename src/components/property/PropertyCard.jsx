@@ -9,7 +9,6 @@ export default function PropertyCard({ property, index = 0 }) {
   const { t, lang } = useLang()
   const [saved, setSaved] = useState(false)
   const [imgError, setImgError] = useState(false)
-  const imageUrl = property.images && property.images.length > 0 ? property.images[0] : null
 
   const typeClass = { rent: 'tag-rent', buy: 'tag-buy', sell: 'tag-sell' }[property.listing_type] || 'tag-rent'
   const typeLabel = { rent: t.types.rent, buy: t.types.buy, sell: t.types.sell }[property.listing_type]
@@ -25,7 +24,7 @@ export default function PropertyCard({ property, index = 0 }) {
       {/* Image */}
       <div className={styles.imageWrap}>
         <img
-          src={imgError || !imageUrl ? 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=70' : imageUrl}
+          src={imgError ? 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=70' : property.images[0]}
           alt={property.title}
           className={styles.image}
           onError={() => setImgError(true)}

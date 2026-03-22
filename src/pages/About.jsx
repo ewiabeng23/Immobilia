@@ -24,7 +24,7 @@ export default function About() {
 
         {/* Hero */}
         <div className={styles.hero}>
-          <span className={styles.badge}>🇨🇲 LoCo.com</span>
+          <span className={styles.badge}>🇨🇲 LoCo.cm</span>
           <h1 className={styles.title}>{t.about.title}</h1>
           <p className={styles.subtitle}>{t.about.subtitle}</p>
         </div>

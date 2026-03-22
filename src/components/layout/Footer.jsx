@@ -11,7 +11,7 @@ export default function Footer() {
         <div className={styles.brand}>
           <div className={styles.logo}>
             <span className={styles.logoMark}>L</span>
-            <span className={styles.logoText}>oCo<span className={styles.logoCM}>.com</span></span>
+            <span className={styles.logoText}>oCo<span className={styles.logoCM}>.cm</span></span>
           </div>
           <p className={styles.tagline}>
             {lang === 'fr'
@@ -40,15 +40,15 @@ export default function Footer() {
 
         <div className={styles.col}>
           <h4>{lang === 'fr' ? 'Contact' : 'Contact'}</h4>
-          <a href="mailto:ewiabeng@yahoo.com">{t.about.contact_email}</a>
-          <a href="tel:+44 7789806378">{t.about.contact_phone}</a>
+          <a href="mailto:contact@loco.com">{t.about.contact_email}</a>
+          <a href="tel:+2376XXXXXXXX">{t.about.contact_phone}</a>
           <p style={{ marginTop: 12, fontSize: 12, color: 'var(--text-muted)' }}>
-            WhatsApp: +44 7789806378
+            WhatsApp: +237 6XX XXX XXX
           </p>
         </div>
       </div>
       <div className={styles.bottom}>
-        <span>© 2025 LoCo.com. {lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</span>
+        <span>© 2025 LoCo.cm. {lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</span>
         <span style={{ color: 'var(--text-muted)' }}>
           {lang === 'fr' ? 'Fait avec ❤️ au Cameroun' : 'Made with ❤️ in Cameroon'}
         </span>

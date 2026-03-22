@@ -1,31 +1,14 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { useLang } from '../hooks/useLang'
 import { mockProperties, CITIES, PROPERTY_TYPES } from '../data/mockData'
-import { supabase } from '../lib/supabase'
 import PropertyCard from '../components/property/PropertyCard'
 import styles from './Listings.module.css'
 
 export default function Listings() {
   const { t, lang } = useLang()
   const [searchParams] = useSearchParams()
-  const [dbProperties, setDbProperties] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    supabase
-      .from('properties')
-      .select('*')
-      .eq('verified', true)
-      .order('created_at', { ascending: false })
-      .then(({ data, error }) => {
-        if (!error && data && data.length > 0) setDbProperties(data)
-        setLoading(false)
-      })
-  }, [])
-
-  const allProperties = dbProperties.length > 0 ? dbProperties : mockProperties
 
   const [query, setQuery]         = useState(searchParams.get('q') || '')
   const [listingType, setType]    = useState(searchParams.get('type') || 'all')
@@ -38,7 +21,7 @@ export default function Listings() {
   const [filtersOpen, setFilters] = useState(false)
 
   const filtered = useMemo(() => {
-    let list = [...allProperties]
+    let list = [...mockProperties]
 
     if (query) {
       const q = query.toLowerCase()
@@ -64,7 +47,7 @@ export default function Listings() {
     }
 
     return list
-  }, [query, listingType, city, propType, minPrice, maxPrice, bedrooms, sort, allProperties])
+  }, [query, listingType, city, propType, minPrice, maxPrice, bedrooms, sort])
 
   const resetFilters = () => {
     setQuery(''); setType('all'); setCity(''); setPropType('')

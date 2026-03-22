@@ -31,7 +31,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className={styles.logo}>
           <span className={styles.logoMark}>L</span>
-          <span className={styles.logoText}>oCo<span className={styles.logoCM}>.com</span></span>
+          <span className={styles.logoText}>oCo<span className={styles.logoCM}>.cm</span></span>
         </Link>
 
         {/* Desktop links */}

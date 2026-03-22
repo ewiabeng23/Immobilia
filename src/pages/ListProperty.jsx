@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { CheckCircle, Upload, ChevronRight } from 'lucide-react'
 import { useLang } from '../hooks/useLang'
 import { CITIES, PROPERTY_TYPES } from '../data/mockData'
-import { supabase } from '../lib/supabase'
 import styles from './ListProperty.module.css'
 
 const AMENITY_OPTIONS = ['Pool','Generator','Security','Parking','AC','Garden','Furnished','WiFi','Fiber Internet','Meeting Rooms','Smart Home','Title Deed','Seafront','Road Access']
@@ -27,49 +26,9 @@ export default function ListProperty() {
   }
   const al = aLabels[lang] || aLabels.fr
 
-  const [submitting, setSubmitting] = useState(false)
-  const [uploadedImages, setUploadedImages] = useState([])
-
-  const handleImageUpload = async (e) => {
-    const files = Array.from(e.target.files).slice(0, 10)
-    const urls = []
-    for (const file of files) {
-      const ext = file.name.split('.').pop()
-      const path = `properties/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-      const { error } = await supabase.storage.from('property-image').upload(path, file)
-      if (!error) {
-        const { data } = supabase.storage.from('property-image').getPublicUrl(path)
-        urls.push(data.publicUrl)
-      }
-    }
-    setUploadedImages(urls)
-  }
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    setSubmitting(true)
-    const { error } = await supabase.from('properties').insert([{
-      title: form.title,
-      listing_type: form.listing_type,
-      property_type: form.property_type,
-      price: Number(form.price),
-      city: form.city,
-      neighborhood: form.neighborhood,
-      bedrooms: form.bedrooms !== '' ? Number(form.bedrooms) : null,
-      bathrooms: form.bathrooms !== '' ? Number(form.bathrooms) : null,
-      area: form.area !== '' ? Number(form.area) : null,
-      description: form.description,
-      amenities: form.amenities,
-      images: uploadedImages,
-      agent_name: form.name,
-      agent_phone: form.phone,
-      agent_email: form.email,
-      verified: false,
-      featured: false,
-    }])
-    setSubmitting(false)
-    if (!error) setDone(true)
-    else alert('Submission failed. Please try again.')
+    setDone(true)
   }
 
   if (done) {
@@ -213,8 +172,7 @@ export default function ListProperty() {
                 <div className={styles.uploadArea}>
                   <Upload size={32} color="var(--text-muted)" />
                   <p>{t.list.photos_hint}</p>
-                  <input type="file" multiple accept="image/*" style={{ display:'none' }} id="photos" onChange={handleImageUpload} />
-                  {uploadedImages.length > 0 && <p style={{fontSize:13,color:'#34d399'}}>✅ {uploadedImages.length} photo(s) uploaded</p>}
+                  <input type="file" multiple accept="image/*" style={{ display:'none' }} id="photos" />
                   <label htmlFor="photos" className={styles.uploadBtn}>
                     {lang==='fr' ? 'Choisir des photos' : 'Choose photos'}
                   </label>
@@ -259,8 +217,8 @@ export default function ListProperty() {
                 {t.list.next} <ChevronRight size={16}/>
               </button>
             ) : (
-              <button type="submit" className={styles.btnSubmit} disabled={submitting}>
-                {submitting ? t.list.submitting : t.list.submit}
+              <button type="submit" className={styles.btnSubmit}>
+                {t.list.submit}
               </button>
             )}
           </div>
