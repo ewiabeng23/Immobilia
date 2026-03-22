@@ -146,8 +146,8 @@ export const translations = {
       mission: 'Our Mission',
       mission_text: 'To make real estate in Cameroon accessible, transparent, and trustworthy for everyone.',
       contact_title: 'Get in Touch',
-      contact_email: 'contact@loco.com',
-      contact_phone: '+237 6XX XXX XXX',
+      contact_email: 'abengewi@gmail.com',
+      contact_phone: '+44 7789806378',
     },
     // General
     general: {
@@ -298,8 +298,8 @@ export const translations = {
       mission: 'Notre mission',
       mission_text: 'Rendre l\'immobilier au Cameroun accessible, transparent et digne de confiance pour tous.',
       contact_title: 'Contactez-nous',
-      contact_email: 'contact@loco.com',
-      contact_phone: '+237 6XX XXX XXX',
+      contact_email: 'abengewi@gmail.com',
+      contact_phone: '+44 7789806378',
     },
     general: {
       loading: 'Chargement…',

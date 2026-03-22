@@ -18,10 +18,13 @@ function ScrollToTop() {
 }
 
 function AppRoutes() {
+  const location = useLocation()
+  const isAdmin = location.pathname === '/admin'
+
   return (
     <>
       <ScrollToTop />
-      <Navbar />
+      {!isAdmin && <Navbar />}
       <main>
         <Routes>
           <Route path="/"             element={<Home />} />
@@ -29,10 +32,11 @@ function AppRoutes() {
           <Route path="/property/:id" element={<PropertyDetail />} />
           <Route path="/list"         element={<ListProperty />} />
           <Route path="/about"        element={<About />} />
+          <Route path="/admin"        element={<Admin />} />
           <Route path="*"             element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
+      {!isAdmin && <Footer />}
     </>
   )
 }
