@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { useLang } from '../hooks/useLang'
-import { mockProperties, CITIES, PROPERTY_TYPES } from '../data/mockData'
+import { CITIES, PROPERTY_TYPES } from '../data/mockData'
+import { supabase } from '../lib/supabase'
 import PropertyCard from '../components/property/PropertyCard'
 import styles from './Listings.module.css'
 
@@ -21,14 +22,14 @@ export default function Listings() {
   const [filtersOpen, setFilters] = useState(false)
 
   const filtered = useMemo(() => {
-    let list = [...mockProperties]
+    let list = [...dbProperties]
 
     if (query) {
       const q = query.toLowerCase()
       list = list.filter(p =>
         p.title.toLowerCase().includes(q) ||
         p.city.toLowerCase().includes(q) ||
-        p.neighborhood.toLowerCase().includes(q) ||
+        (p.neighborhood||chr(39)+chr(39)).toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q)
       )
     }
