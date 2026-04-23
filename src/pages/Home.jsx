@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Search, ArrowRight, Shield, Phone, MapPin } from 'lucide-react'
 import { useLang } from '../hooks/useLang'
-import { mockProperties, CITY_IMAGES } from '../data/mockData'
+import { CITY_IMAGES } from '../data/mockData'
 import { supabase } from '../lib/supabase'
 import PropertyCard from '../components/property/PropertyCard'
 import styles from './Home.module.css'
@@ -12,16 +12,15 @@ export default function Home() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('rent')
-
   const [dbProperties, setDbProperties] = useState([])
+
   useEffect(() => {
-    supabase.from('properties').select('id,city,featured,verified').eq('verified', true)
+    supabase.from('properties').select('*').eq('verified', true)
+      .order('created_at', { ascending: false })
       .then(({ data }) => { if (data) setDbProperties(data) })
   }, [])
-  const allProps = dbProperties.length > 0 ? dbProperties : mockProperties
-  const featured = dbProperties.length > 0
-    ? dbProperties.filter(p => p.featured).slice(0, 6)
-    : mockProperties.filter(p => p.featured).slice(0, 6)
+
+  const featured = dbProperties.filter(p => p.featured).slice(0, 6)
   const cities = ['Douala', 'Yaoundé', 'Bafoussam', 'Kribi', 'Bamenda', 'Garoua']
 
   const handleSearch = (e) => {
@@ -48,9 +47,7 @@ export default function Home() {
             {t.hero.subtitle}
           </p>
 
-          {/* Search box */}
           <div className={`${styles.searchBox} glass fade-up delay-4`}>
-            {/* Tabs */}
             <div className={styles.searchTabs}>
               {['rent','buy','sell'].map(tab => (
                 <button
@@ -63,7 +60,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Input row */}
             <form className={styles.searchRow} onSubmit={handleSearch}>
               <div className={styles.searchInput}>
                 <MapPin size={16} className={styles.searchIcon} />
@@ -81,7 +77,6 @@ export default function Home() {
             </form>
           </div>
 
-          {/* Stats */}
           <div className={`${styles.stats} fade-up delay-5`}>
             {[
               { val: '500+', label: t.hero.stats_listings },
@@ -96,7 +91,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Hero visual */}
         <div className={styles.heroVisual}>
           <img
             src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1000&q=85"
@@ -130,22 +124,24 @@ export default function Home() {
       </section>
 
       {/* FEATURED */}
-      <section className={styles.section}>
-        <div className="container">
-          <div className={styles.sectionHead}>
-            <div>
-              <h2 className={styles.sectionTitle}>{t.home.featured}</h2>
-              <p className={styles.sectionSub}>{t.home.featured_sub}</p>
+      {featured.length > 0 && (
+        <section className={styles.section}>
+          <div className="container">
+            <div className={styles.sectionHead}>
+              <div>
+                <h2 className={styles.sectionTitle}>{t.home.featured}</h2>
+                <p className={styles.sectionSub}>{t.home.featured_sub}</p>
+              </div>
+              <Link to="/listings" className={styles.seeAll}>
+                {lang === 'fr' ? 'Voir tout' : 'View all'} <ArrowRight size={16} />
+              </Link>
             </div>
-            <Link to="/listings" className={styles.seeAll}>
-              {lang === 'fr' ? 'Voir tout' : 'View all'} <ArrowRight size={16} />
-            </Link>
+            <div className={styles.grid}>
+              {featured.map((p, i) => <PropertyCard key={p.id} property={p} index={i} />)}
+            </div>
           </div>
-          <div className={styles.grid}>
-            {featured.map((p, i) => <PropertyCard key={p.id} property={p} index={i} />)}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* HOW IT WORKS */}
       <section className={styles.section}>
@@ -184,7 +180,7 @@ export default function Home() {
           </div>
           <div className={styles.citiesGrid}>
             {cities.map((city, i) => {
-              const count = allProps.filter(p => p.city === city).length
+              const count = dbProperties.filter(p => p.city === city).length
               return (
                 <Link
                   key={city}
